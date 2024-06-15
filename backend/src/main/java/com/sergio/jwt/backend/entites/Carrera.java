@@ -1,9 +1,9 @@
 package com.sergio.jwt.backend.entites;
 
+
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,21 +14,19 @@ import java.util.List;
 @Data
 @Getter
 @Setter
-public class Aula {
+public class Carrera {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
-    @Column(name = "numero")
-    private long numero;
+    @Column(name = "codigo")
+    private String codigo;
 
-    @ManyToOne
-    @JoinColumn(name = "modulo_id")
-    private Modulo modulo;
+    @Column(name = "nombre")
+    private String nombre;
 
-    @OneToMany(mappedBy = "aula")
-    private List<Mate_Grupo_Aula_Horario> clases_aula = new ArrayList<>();
-
+    @ManyToMany(mappedBy = "carrera_id")
+    private List<Materia> materiasLis;
 
 }

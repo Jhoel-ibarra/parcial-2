@@ -1,10 +1,7 @@
 package com.sergio.jwt.backend.entites;
 
-
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.List;
 
 @Entity
 @Table
@@ -14,14 +11,13 @@ import java.util.List;
 @Data
 @Getter
 @Setter
-public class Modulo {
+
+public class CargaHoraria {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
+    private long id;
 
-    @Column(name = "name")
-    private String name;
 
-    @OneToMany(mappedBy = "modulo")
-    private List<Aula> aulas;
+
 }

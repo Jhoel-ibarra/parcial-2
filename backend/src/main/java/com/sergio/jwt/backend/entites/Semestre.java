@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "semestre")
+@Table
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -27,9 +27,18 @@ public class Semestre {
     @Column(name ="descripcion")
     private String descripcion;
 
-    @OneToMany(cascade = CascadeType.ALL,
-                    mappedBy = "semestre")
-    private List<Materia>  materias ;
+    @OneToMany(mappedBy = "semestre")
+    private List<Materia>  materias  = new ArrayList<Materia>();
 
 
+
+    public void addMateria(Materia materia) {
+        materias.add(materia);
+        materia.setSemestre(this);
+    }
+
+    public void removeMateria(Materia materia) {
+        materias.remove(materia);
+        materia.setSemestre(null);
+    }
 }

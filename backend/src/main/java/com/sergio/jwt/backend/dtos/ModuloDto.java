@@ -3,6 +3,8 @@ package com.sergio.jwt.backend.dtos;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -12,7 +14,7 @@ import lombok.*;
 public class ModuloDto {
 
     private Long id;
-    @NotNull
     private String name;
-
+    private List<AulaDto> aulas;
 }
+

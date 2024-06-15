@@ -1,6 +1,5 @@
 package com.sergio.jwt.backend.controllers;
 
-import com.sergio.jwt.backend.dtos.ModuloDto;
 import com.sergio.jwt.backend.dtos.SemestreDto;
 import com.sergio.jwt.backend.services.SemestreService;
 import jakarta.validation.Valid;

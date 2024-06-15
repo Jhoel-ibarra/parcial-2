@@ -19,6 +19,5 @@ public interface SemestreMapper {
 
     void updateSemestre(@MappingTarget Semestre target, Semestre semestreDto);
 
-
 }
 

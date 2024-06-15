@@ -1,21 +1,18 @@
 package com.sergio.jwt.backend.dtos;
 
-
 import lombok.*;
 
 import java.util.List;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
 @Getter
 @Setter
-public class SemestreDto {
+public class GrupoDto {
 
-    private Long id;
-    private String nivel;
-    private String descripcion;
-    private List<MateriaDto> materias;
+    private long id;
+    private String nombre;
+    public List<MateriaDto> materiasList;
 
 }

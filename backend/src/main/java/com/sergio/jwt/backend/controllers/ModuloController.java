@@ -1,6 +1,7 @@
 package com.sergio.jwt.backend.controllers;
 
 import com.sergio.jwt.backend.dtos.ModuloDto;
+import com.sergio.jwt.backend.dtos.SemestreDto;
 import com.sergio.jwt.backend.services.ModuloService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,9 @@ public class ModuloController {
         ModuloDto createdModulo = moduloService.createModulo(moduloDto);
         return ResponseEntity.created(URI.create("/modulos/" + createdModulo.getId())).body(createdModulo);
     }
+
+
+
     @DeleteMapping("/modulos/{id}")
     public ResponseEntity<ModuloDto> deleteModulo(@PathVariable long id){
         return ResponseEntity.ok(moduloService.deleteModulo(id));

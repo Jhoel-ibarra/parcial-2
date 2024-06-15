@@ -7,6 +7,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -34,4 +37,15 @@ public class User {
     @Column(nullable = false)
     @Size(max = 100)
     private String password;
+
+    @ManyToMany
+    @JoinTable( name = "user_materia" ,
+                joinColumns = @JoinColumn(name = "user_id"),
+                inverseJoinColumns = @JoinColumn(name = "materia_id"))
+    private List<Materia> materiasList ;
+
+    @OneToMany(mappedBy = "docente")
+    private List<Mate_Grupo_Aula_Horario> cargaHorariaList = new ArrayList<>();
+
+
 }

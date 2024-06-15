@@ -1,7 +1,10 @@
 package com.sergio.jwt.backend.dtos;
 
+import com.sergio.jwt.backend.entites.Semestre;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,12 +15,9 @@ import lombok.*;
 public class MateriaDto {
 
     private Long id;
-
-    @NotNull
     private String sigla;
-    @NotNull
     private String name;
-
-    private Long semestreId;
+    private long semestreId;
+    private List<GrupoDto> grupos;
 
 }

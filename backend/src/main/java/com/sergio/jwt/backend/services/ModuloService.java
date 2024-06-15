@@ -2,7 +2,9 @@ package com.sergio.jwt.backend.services;
 
 
 import com.sergio.jwt.backend.dtos.ModuloDto;
+import com.sergio.jwt.backend.dtos.SemestreDto;
 import com.sergio.jwt.backend.entites.Modulo;
+import com.sergio.jwt.backend.entites.Semestre;
 import com.sergio.jwt.backend.exceptions.AppException;
 import com.sergio.jwt.backend.mappers.ModuloMapper;
 import com.sergio.jwt.backend.repositories.ModuloRepository;
