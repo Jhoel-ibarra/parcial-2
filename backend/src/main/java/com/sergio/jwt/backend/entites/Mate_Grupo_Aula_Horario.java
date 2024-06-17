@@ -40,4 +40,8 @@ public class Mate_Grupo_Aula_Horario {
     @JoinColumn(name = "docente_id", nullable = false)
     private User docente;
 
+    @OneToOne( mappedBy = "clase")
+    private Asistencia asistencia;
+
+
 }

@@ -39,9 +39,6 @@ public class MateriaService {
         return materiaMapper.toMateriaDtos(all);
     }
 
-
-
-
     public MateriaDto deleteMateria(long id) {
         Materia materia = materiaRespository.findById(id)
                 .orElseThrow(() -> new AppException("Materia not found", HttpStatus.NOT_FOUND));

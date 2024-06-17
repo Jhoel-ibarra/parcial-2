@@ -12,9 +12,9 @@ public class ClasesEntradaDto {
 
     private long id;
     private long materiaID;
-    private long grupoId;
+    private long grupoID;
     private long horarioID;
     private long aulaID;
-    private long docenteId;
+    private long docenteID;
 
 }

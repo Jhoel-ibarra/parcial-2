@@ -1,6 +1,9 @@
 package com.sergio.jwt.backend.dtos;
 
+import com.sergio.jwt.backend.entites.Mate_Grupo_Aula_Horario;
 import lombok.*;
+
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor

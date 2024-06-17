@@ -25,7 +25,7 @@ public interface ClasesMapper {
     Horario toHorario(HorarioDto horarioDto);
     Aula toAula(AulaDto aulaDto);
     Grupo toGrupo(GrupoDto grupoDto);
-    User toDocente(UserDto userDto);
+    User toDocente(PerfilDocenteDto userDto);
 
     default ClasesDto toClasesDto(Mate_Grupo_Aula_Horario clases) {
         if (clases == null){

@@ -47,5 +47,7 @@ public class User {
     @OneToMany(mappedBy = "docente")
     private List<Mate_Grupo_Aula_Horario> cargaHorariaList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "docente")
+    private List<Licencia>  licencias = new ArrayList<>();
 
 }

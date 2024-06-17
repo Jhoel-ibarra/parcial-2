@@ -3,6 +3,8 @@ package com.sergio.jwt.backend.entites;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,10 +26,10 @@ public class Horario {
     private String dia;
 
     @Column(name = "HoraInicio")
-    private String HoraInicio;
+    private LocalTime HoraInicio;
 
     @Column(name = "HoraFinal")
-    private String HoraFinal;
+    private LocalTime HoraFinal;
 
     @OneToMany( mappedBy = "horario")
     private List<Mate_Grupo_Aula_Horario> clase_horario = new ArrayList<>();

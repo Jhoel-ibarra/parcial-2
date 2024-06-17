@@ -2,6 +2,8 @@ package com.sergio.jwt.backend.dtos;
 
 import lombok.*;
 
+import java.time.LocalDate;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -12,7 +14,7 @@ public class HorarioDto {
 
     private long id;
     private String dia;
-    private String HoraInicio;
-    private String HoraFinal;
+    private LocalDate HoraInicio;
+    private LocalDate HoraFinal;
 
 }
