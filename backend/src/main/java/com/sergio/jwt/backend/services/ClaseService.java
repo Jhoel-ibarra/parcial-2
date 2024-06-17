@@ -57,34 +57,32 @@ public class ClaseService {
 
         User user = userRepository.findById(clasesDto.getDocenteID())
                 .orElseThrow( ()-> new AppException("No se encontro la usuario", HttpStatus.NOT_FOUND));
-        Asistencia asistencia =  new Asistencia();
 
         Mate_Grupo_Aula_Horario clases = new Mate_Grupo_Aula_Horario();
-
-        asistencia.setEstado("falta");
-        clases.setAsistencia(asistencia);
-
         clases.setMateria(materia);
-        materia.getClases_materia().add(clases);
-
         clases.setGrupo(grupo);
-        grupo.getClases_grupo().add(clases);
-
         clases.setHorario(horario);
-        horario.getClase_horario().add(clases);
-
         clases.setAula(aula);
-        aula.getClases_aula().add(clases);
-
         clases.setDocente(user);
-        user.getCargaHorariaList().add(clases);
 
-
-        user.getMateriasList().add(materia);
-        materia.getUserList().add(user);
-
-        //clasesMapper.updateClases(clases, clases);
         Mate_Grupo_Aula_Horario nuevo = clasesRepository.save(clases);
+
+        Asistencia asistencia =  new Asistencia();
+        asistencia.setEstado("falta");
+        asistencia.setClase(nuevo);
+
+        asistenciaRespository.save(asistencia);
+
+        nuevo.setAsistencia(asistencia);
+        clasesRepository.save(nuevo);
+
+        materia.getClases_materia().add(nuevo);
+        grupo.getClases_grupo().add(nuevo);
+        horario.getClase_horario().add(nuevo);
+        aula.getClases_aula().add(nuevo);
+        user.getCargaHorariaList().add(nuevo);
+
+
         return clasesMapper.toClasesDto(nuevo);
     }
 }

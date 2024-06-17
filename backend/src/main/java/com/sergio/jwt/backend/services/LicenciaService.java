@@ -12,12 +12,15 @@ import com.sergio.jwt.backend.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.TextStyle;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 @RequiredArgsConstructor
@@ -39,33 +42,43 @@ public class LicenciaService {
         List<Licencia> licencias = user.getLicencias();
         return licenciaMapper.toLicenciaDtos(licencias);
     }
-
+    @Transactional
     public LicenciaDto createLicencia(LicenciaDto licenciaDto, UserDto userDto) {
         Licencia licencia = licenciaMapper.toLicencia(licenciaDto);
         User user = this.getUser(userDto);
         licencia.setDocente(user);
 
         ZoneId boliviaZoneId = ZoneId.of("America/La_Paz");
-        licencia.setCreado(ZonedDateTime.now(boliviaZoneId).toLocalDateTime());
+        LocalDateTime localDateTimeNow = ZonedDateTime.now(boliviaZoneId).toLocalDateTime();
+        licencia.setCreado(localDateTimeNow);
 
-           List<Mate_Grupo_Aula_Horario> clases = user.getCargaHorariaList();
-            if(clases.isEmpty()){
+        List<Mate_Grupo_Aula_Horario> clases = user.getCargaHorariaList();
+        if(clases.isEmpty()){
                 throw new AppException("carga horaria list empty", HttpStatus.BAD_REQUEST);
-            }
+        }
+        if(licencia.getFecha().isBefore(ZonedDateTime.now(boliviaZoneId).toLocalDate())){
+            throw new AppException("fecha incorrecta", HttpStatus.BAD_REQUEST);
+        }
 
-           for ( Mate_Grupo_Aula_Horario clase : clases){
-               LocalTime horaInicio = licencia.getCreado().plusHours(1).toLocalTime();
-               LocalTime horafinal = clase.getHorario().getHoraInicio();
-               if(horaInicio.isBefore(horafinal) ||
-                       horaInicio.equals(horafinal) ){
-                     throw  new AppException("la hora para perdir licencia esta fuera de rango  fuera de rango", HttpStatus.BAD_REQUEST);
-               }
-           }
+        if(licencia.getFecha().isEqual(ZonedDateTime.now(boliviaZoneId).toLocalDate())){
+                for ( Mate_Grupo_Aula_Horario clase : clases){
+                    if (localDateTimeNow.getDayOfWeek().
+                            getDisplayName(TextStyle.FULL,Locale.forLanguageTag("es")).
+                            equals(clase.getHorario().getDia())){
+                    LocalTime horaInicio = licencia.getCreado().plusHours(1).toLocalTime();
+                    LocalTime horafinal = clase.getHorario().getHoraInicio();
+                    if(horaInicio.isBefore(horafinal) ||
+                            horaInicio.equals(horafinal) ){
+                        throw  new AppException("la hora para perdir licencia esta fuera de rango  fuera de rango", HttpStatus.BAD_REQUEST);
+                     }
+                    }
+                }
+        }
 
-        licencia.setCreado(LocalDateTime.now());
-        user.getLicencias().add(licencia);
+        Licencia licenciaSave = licenciaRespository.save(licencia);
+        user.getLicencias().add(licenciaSave);
         userRepository.save(user);
-        return licenciaMapper.toLicenciaDto(licenciaRespository.save(licencia));
+        return licenciaMapper.toLicenciaDto(licenciaSave);
     }
 
     public LicenciaDto deleteLicencia(long id) {
