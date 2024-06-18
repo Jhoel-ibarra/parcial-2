@@ -1,8 +1,10 @@
 package com.sergio.jwt.backend.dtos;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
-import java.time.LocalDate;
+
+import java.time.LocalTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,7 +16,12 @@ public class HorarioDto {
 
     private long id;
     private String dia;
-    private LocalDate HoraInicio;
-    private LocalDate HoraFinal;
+
+    @JsonFormat(pattern = "HH:mm")
+    private LocalTime inicia;
+
+    @JsonFormat(pattern = "HH:mm")
+    private LocalTime termina;
+
 
 }

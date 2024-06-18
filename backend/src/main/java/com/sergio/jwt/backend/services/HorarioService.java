@@ -1,13 +1,10 @@
 package com.sergio.jwt.backend.services;
 
 
-import com.sergio.jwt.backend.dtos.AulaDto;
 import com.sergio.jwt.backend.dtos.HorarioDto;
-import com.sergio.jwt.backend.entites.Aula;
 import com.sergio.jwt.backend.entites.Horario;
 import com.sergio.jwt.backend.exceptions.AppException;
 import com.sergio.jwt.backend.mappers.HorarioMapper;
-import com.sergio.jwt.backend.mappers.MateriaMapper;
 import com.sergio.jwt.backend.repositories.HorarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,7 +17,7 @@ import java.util.List;
 public class HorarioService {
 
     private final HorarioRepository horarioRepository;
-    private  final HorarioMapper horarioMapper;
+    private final HorarioMapper horarioMapper;
 
 
     public List<HorarioDto> findAll() {
@@ -37,9 +34,11 @@ public class HorarioService {
 
     public HorarioDto addHorario(HorarioDto horarioDto) {
         Horario horario = horarioMapper.toHorario(horarioDto);
-        horario = horarioRepository.save(horario);
-        return horarioMapper.toHorarioDto(horario);
+        Horario nuevo =  horarioRepository.save(horario);
+        return horarioMapper.toHorarioDto(nuevo);
     }
+
+
     public HorarioDto updateHorario(Long id, HorarioDto horarioDto) {
         Horario horario = horarioRepository.findById(id).
                 orElseThrow(()-> new AppException("horaio no encontrado", HttpStatus.NOT_FOUND));

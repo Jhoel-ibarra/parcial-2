@@ -2,38 +2,43 @@ package com.sergio.jwt.backend.controllers;
 
 
 import com.sergio.jwt.backend.dtos.LicenciaDto;
+import com.sergio.jwt.backend.dtos.MateriaDto;
+import com.sergio.jwt.backend.dtos.SemestreDto;
 import com.sergio.jwt.backend.dtos.UserDto;
 import com.sergio.jwt.backend.entites.Licencia;
 import com.sergio.jwt.backend.services.LicenciaService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
 
 @RequiredArgsConstructor
-@RestController("/licencia")
+@RequestMapping("licencia")
+@RestController
 public class LicenciaCOntroller {
 
     private final LicenciaService licenciaService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<LicenciaDto>> findAll(
-            @AuthenticationPrincipal UserDto userDto) {
-
-        return ResponseEntity.ok(licenciaService.getAll(userDto));
+    public ResponseEntity<List<LicenciaDto>> listasDocente(long id) {
+        return ResponseEntity.ok(licenciaService.allDocente(id));
     }
 
-    @PostMapping
-    public ResponseEntity<LicenciaDto> createLicencia(
-            @AuthenticationPrincipal UserDto user,
-            @RequestBody LicenciaDto licenciaDto) {
-        return ResponseEntity.created(URI.create("/licencia/all")).body(licenciaService.createLicencia(licenciaDto, user));
+    @PostMapping("/crear/{id}")
+    public ResponseEntity<LicenciaDto> createLicencia(@RequestBody LicenciaDto licenciaDto, @PathVariable long id) {
+       LicenciaDto licencia = licenciaService.createLicencia(licenciaDto, id);
+       return ResponseEntity.created(URI.create("/licencia/" + licencia.getId())).body(licencia);
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<LicenciaDto> getLicencia(@PathVariable long id) {
+        return ResponseEntity.ok(licenciaService.getLicencia(id));
+    }
+
+
+
 
 }

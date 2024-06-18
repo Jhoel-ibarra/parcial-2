@@ -39,6 +39,7 @@ public class ClasesController {
 
     @PostMapping("/horario")
     public ResponseEntity<HorarioDto> createHorario(@Valid @RequestBody HorarioDto horarioDto){
+        System.out.println(horarioDto);
         HorarioDto horario = horarioService.addHorario(horarioDto);
         return ResponseEntity.created(URI.create( "/horario/" +horario.getId())).body(horario);
     }
@@ -70,6 +71,7 @@ public class ClasesController {
     public ResponseEntity<ClasesDto> ClaseCrear(@Valid @RequestBody ClasesEntradaDto clasesDto){
         ClasesDto clases = claseService.nuevoClase(clasesDto);
         return ResponseEntity.created(URI.create( "/clase/" +clases.getId())).build();
+
     }
 
     @GetMapping("/clase/{id}")
