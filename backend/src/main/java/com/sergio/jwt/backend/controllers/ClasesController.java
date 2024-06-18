@@ -25,11 +25,17 @@ public class ClasesController {
     private final GrupoService grupoService;
 
 
+    @PostMapping("/reportes")
+    public ResponseEntity<List<ReporteSalida>> getReporte(@RequestBody ReporteEntrada reporteEntrada){
+        List<ReporteSalida> reporteSalida = claseService.reporteSalida( reporteEntrada );
+        return ResponseEntity.ok(reporteSalida);
+    }
     @GetMapping("/aula")
     public ResponseEntity<List<AulaDto>> allAula(){
 
         return ResponseEntity.ok(aulaService.getAllAulas());
     }
+
 
     @PostMapping("/aula")
     public ResponseEntity<AulaDto> createAula(@Valid @RequestBody AulaDto aulaDto){
@@ -64,6 +70,8 @@ public class ClasesController {
     public ResponseEntity<GrupoDto> getGrupoId(@PathVariable long id){
         return ResponseEntity.ok(grupoService.getGrupo(id));
     }
+
+
 
 
 
